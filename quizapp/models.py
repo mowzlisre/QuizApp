@@ -21,13 +21,7 @@ class Test(models.Model):
     question=models.ManyToManyField(Question)
     def __str__(self):
         return self.name
-class Person(models.Model):
-    name=models.CharField(max_length=100)
-    location=models.CharField(max_length=100)
-    num=models.CharField(max_length=10)
-    lost=models.BooleanField(default=False)
-    found=models.BooleanField(default=True)
-    img=models.ImageField(null=True)
+
     
         
     
