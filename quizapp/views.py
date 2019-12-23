@@ -24,24 +24,38 @@ class UserCreateView(APIView):
             return Response({"status": 200, "id": user.unique_id})
 
 
-class TestAttendingView(APIView):
+class HomeView(APIView):
     def get(self, request):
-        return Response({
-            "data": [
-                {'pk': test.pk,
-                    'name': test.name,
-                    'questiondata': [
-                        {
-                            'question': question.question,
-                            'options': [option.option for option in question.options.all()],
-                            'correct_option':question.correct_option
+        return Response([
+            {
+                'pk': test.pk,
+                'name': test.name,
+                'description': test.description
+            }
+            for test in Test.objects.all()])
 
 
-                        }
-                        for question in test.question.all()
+class TestAttendingView(APIView):
+    def get(self, request, pk):
 
-                    ]
+        test = get_object_or_404(Test, pk=pk)
+        return Response(
+
+            {'pk': test.pk,
+             'name': test.name,
+             'questions': [
+                 {
+                     'id': question.pk,
+                     'question': question.question,
+                     'options': [option.option for option in question.options.all()],
+                     'answer':question.correct_option
+
 
                  }
-                for test in Test.objects.all()]
-        })
+                 for question in test.question.all()
+
+             ]
+
+
+
+             })

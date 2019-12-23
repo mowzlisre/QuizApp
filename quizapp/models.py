@@ -19,6 +19,7 @@ class Test(models.Model):
     name=models.CharField(max_length=200,null=True)
     user=models.ManyToManyField(User)
     question=models.ManyToManyField(Question)
+    description=models.TextField()
     score=models.IntegerField(default=0)
     def __str__(self):
         return self.name
